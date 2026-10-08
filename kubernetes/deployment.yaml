@@ -1,0 +1,41 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enterprise-cicd-app
+  labels:
+    app: enterprise-cicd-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: enterprise-cicd-app
+  template:
+    metadata:
+      labels:
+        app: enterprise-cicd-app
+    spec:
+      containers:
+        - name: enterprise-cicd-app
+          image: 990851550012.dkr.ecr.ap-south-1.amazonaws.com/enterprise-cicd-app:77743b2a466e8c93a28df31e3443d3452fe4446b
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
