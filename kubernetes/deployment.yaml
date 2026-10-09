@@ -7,6 +7,11 @@ metadata:
     app: enterprise-cicd-app
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: enterprise-cicd-app
@@ -17,7 +22,7 @@ spec:
     spec:
       containers:
         - name: enterprise-cicd-app
-          image: 990851550012.dkr.ecr.ap-south-1.amazonaws.com/enterprise-cicd-app:77743b2a466e8c93a28df31e3443d3452fe4446b
+          image: 990851550012.dkr.ecr.ap-south-1.amazonaws.com/enterprise-cicd-app:062c162c3514ea64176ff1e63802f2eb2c5de424
           ports:
             - containerPort: 5000
           readinessProbe:
